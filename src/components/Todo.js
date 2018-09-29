@@ -35,6 +35,10 @@ class Todo extends Component {
         this.setState({ todos: newTodos });
     }
 
+    onClearAllTodos() {
+        this.setState({ todos: [] });
+    }
+
     render() {
         return (
             <div className="todo-container">
@@ -51,6 +55,7 @@ class Todo extends Component {
                         <li>{todo}</li> <div className="fa fa-times" onClick={() => this.onRemoveTodo(i)}></div>
                     </div>
                 )}</ul>
+                <button className="clear-all" onClick={this.onClearAllTodos.bind(this)}>Clear all</button>
             </div>
         )
     }

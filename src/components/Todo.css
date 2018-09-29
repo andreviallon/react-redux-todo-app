@@ -28,9 +28,10 @@ button {
     width: 100px;
     margin-left: 30px;
     cursor: pointer;
-    background-color: rgb(235, 235, 235);
+    background-color: #222;
     border: 0px solid;
-    color: rgb(139, 139, 139);
+    color: white;
+    font-weight: 500;
 }
 
 .flex-container {
@@ -53,4 +54,8 @@ li {
 
 .fa {
     cursor: pointer;
+}
+
+.clear-all{
+    margin: 0;
 }
