@@ -21,12 +21,18 @@ class Todo extends Component {
     onAddTodo() {
         const newTodo = this.state.newTodo;
 
-        newTodo.trim;
-
         if (newTodo === '') return;
 
         this.setState({ todos: [newTodo, ...this.state.todos] });
         this.setState({ newTodo: '' });
+    }
+
+    onRemoveTodo(i) {
+        let newTodos = [...this.state.todos];
+
+        newTodos.splice(i, 1);
+
+        this.setState({ todos: newTodos });
     }
 
     render() {
@@ -38,11 +44,11 @@ class Todo extends Component {
                     <br />
                     <br />
                     <input type="text" name="title" className="input" onChange={this.onChange} value={this.state.newTodo} />
-                    <button onClick={this.onAddTodo}>Submit</button>
+                    <button onClick={this.onAddTodo}>Add</button>
                 </div>
                 <ul>{this.state.todos.map((todo, i) =>
                     <div key={i} className="flex-container">
-                        <li>{todo}</li> <div className="fa fa-times"></div>
+                        <li>{todo}</li> <div className="fa fa-times" onClick={() => this.onRemoveTodo(i)}></div>
                     </div>
                 )}</ul>
             </div>
