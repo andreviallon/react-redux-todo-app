@@ -1,0 +1,55 @@
+.todo-container {
+    margin: 50px;
+    padding: 50px;
+    background-color: white;
+    -webkit-box-shadow: 5px 0px 75px -19px rgba(0,0,0,0.33);
+    -moz-box-shadow: 5px 0px 75px -19px rgba(0,0,0,0.33);
+    box-shadow: 5px 0px 75px -19px rgba(0,0,0,0.33);
+}
+
+.title-container {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.input {
+    font-size: 16px;
+    height: 25px;
+    width: 500px;
+    border: 0px solid;
+    border-bottom: 1px solid #ccc;
+    outline: none;
+}
+
+button {
+    font-size: 15px;
+    height: 35px;
+    width: 100px;
+    margin-left: 30px;
+    cursor: pointer;
+    border: 2px solid #ccc;
+    color: rgb(139, 139, 139);
+}
+
+.flex-container {
+    display: flex;
+}
+
+ul {
+    margin-top: 30px;
+    padding: 0;
+}
+
+.checkbox {
+    cursor: pointer;
+}
+
+li {
+    list-style: none;
+    padding: 0 10px 10px;
+}
+
+.fa {
+    cursor: pointer;
+}
