@@ -1,7 +1,8 @@
-import { FETCH_TODOS } from '../actions/types';
+import { FETCH_TODOS, ADD_TODO } from '../actions/types';
 
 const initialState = {
-    items: ['wash car', 'grocery shoppong']
+    todosList: [],
+    newTodo: ''
 }
 
 export default function (state = initialState, action) {
@@ -9,7 +10,12 @@ export default function (state = initialState, action) {
         case FETCH_TODOS:
             return {
                 ...state,
-                todos: action.payload
+                todosList: action.payload
+            }
+        case ADD_TODO:
+            return {
+                ...state,
+                todosList: action.payload
             }
         default:
             return state;

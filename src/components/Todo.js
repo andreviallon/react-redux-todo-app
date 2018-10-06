@@ -1,14 +1,48 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchTodos } from '../actions/todoActions';
+import { fetchTodos, addTodo } from '../actions/todoActions';
 
 import './Todo.css';
 
 class Todos extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            newTodo: ''
+        }
+
+        this.onChange = this.onChange.bind(this);
+        this.onAddTodo = this.onAddTodo.bind(this);
+    }
+
     componentWillMount() {
         this.props.fetchTodos();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.newTodo) {
+            this.props.todosList.unshift(nextProps.newTodo);
+        }
+    }
+
+    onChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    onAddTodo(e) {
+        e.preventDefault();
+
+        const newTodo = this.state.newTodo;
+        const trimedTodo = newTodo.trim();
+
+        if (trimedTodo === '') return;
+
+        const newTodosList = [trimedTodo, ...this.props.todos];
+
+        this.props.addTodo(newTodosList);
+        this.setState({ newTodo: '' });
     }
 
     render() {
@@ -19,8 +53,8 @@ class Todos extends Component {
                     <label>What would you like to do toady?</label>
                     <br />
                     <br />
-                    <input type="text" name="title" className="input" />
-                    <button>Add</button>
+                    <input type="text" name="newTodo" className="input" onChange={this.onChange} value={this.state.newTodo} />
+                    <button onClick={this.onAddTodo}>Add</button>
                 </div>
                 <ul>{this.props.todos.map((todo, i) =>
                     <div key={i} className="flex-container">
@@ -34,11 +68,14 @@ class Todos extends Component {
 }
 
 Todos.propsTypes = {
-    fetchTodos: PropTypes.func.isRequired
+    fetchTodos: PropTypes.func.isRequired,
+    todosList: PropTypes.array.isRequired,
+    newTodo: PropTypes.string
 }
 
 const mapStateToProps = state => ({
-    todos: state.todos.items
+    todos: state.todos.todosList,
+    newTodo: state.todos.todo
 });
 
-export default connect(mapStateToProps, { fetchTodos })(Todos);
+export default connect(mapStateToProps, { fetchTodos, addTodo })(Todos);
