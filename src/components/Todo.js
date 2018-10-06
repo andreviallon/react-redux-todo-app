@@ -1,42 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchTodos } from '../actions/todoActions';
 
 import './Todo.css';
 
-class Todo extends Component {
+class Todos extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            todos: ['Clean Car', 'Do Laundry', 'Go grocery shopping'],
-            newTodo: ''
-        }
-        this.onChange = this.onChange.bind(this);
-        this.onAddTodo = this.onAddTodo.bind(this);
-    }
-
-    onChange(e) {
-        this.setState({ newTodo: [e.target.value] });
-    }
-
-    onAddTodo() {
-        const newTodo = this.state.newTodo;
-
-        if (newTodo === '') return;
-
-        this.setState({ todos: [newTodo, ...this.state.todos] });
-        this.setState({ newTodo: '' });
-    }
-
-    onRemoveTodo(i) {
-        let newTodos = [...this.state.todos];
-
-        newTodos.splice(i, 1);
-
-        this.setState({ todos: newTodos });
-    }
-
-    onClearAllTodos() {
-        this.setState({ todos: [] });
+    componentWillMount() {
+        this.props.fetchTodos();
     }
 
     render() {
@@ -47,18 +19,26 @@ class Todo extends Component {
                     <label>What would you like to do toady?</label>
                     <br />
                     <br />
-                    <input type="text" name="title" className="input" onChange={this.onChange} value={this.state.newTodo} />
-                    <button onClick={this.onAddTodo}>Add</button>
+                    <input type="text" name="title" className="input" />
+                    <button>Add</button>
                 </div>
-                <ul>{this.state.todos.map((todo, i) =>
+                <ul>{this.props.todos.map((todo, i) =>
                     <div key={i} className="flex-container">
-                        <li>{todo}</li> <div className="fa fa-times" onClick={() => this.onRemoveTodo(i)}></div>
+                        <li>{todo}</li> <div className="fa fa-times"></div>
                     </div>
                 )}</ul>
-                <button className="clear-all" onClick={this.onClearAllTodos.bind(this)}>Clear all</button>
+                <button className="clear-all">Clear all</button>
             </div>
         )
     }
 }
 
-export default Todo;
+Todos.propsTypes = {
+    fetchTodos: PropTypes.func.isRequired
+}
+
+const mapStateToProps = state => ({
+    todos: state.todos.items
+});
+
+export default connect(mapStateToProps, { fetchTodos })(Todos);
