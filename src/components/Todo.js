@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchTodos, addTodo } from '../actions/todoActions';
+import { fetchTodos, addTodo, removeTodo } from '../actions/todoActions';
 
 import './Todo.css';
 
@@ -45,6 +45,13 @@ class Todos extends Component {
         this.setState({ newTodo: '' });
     }
 
+    onRemoveTodo(i) {
+        const newTodosList = [...this.props.todos];
+        newTodosList.splice(i, 1);
+
+        this.props.removeTodo(newTodosList);
+    }
+
     render() {
         return (
             <div className="todo-container">
@@ -58,7 +65,7 @@ class Todos extends Component {
                 </div>
                 <ul>{this.props.todos.map((todo, i) =>
                     <div key={i} className="flex-container">
-                        <li>{todo}</li> <div className="fa fa-times"></div>
+                        <li>{todo}</li> <div className="fa fa-times" onClick={() => this.onRemoveTodo(i)}></div>
                     </div>
                 )}</ul>
                 <button className="clear-all">Clear all</button>
@@ -69,13 +76,11 @@ class Todos extends Component {
 
 Todos.propsTypes = {
     fetchTodos: PropTypes.func.isRequired,
-    todosList: PropTypes.array.isRequired,
-    newTodo: PropTypes.string
+    todosList: PropTypes.array.isRequired
 }
 
 const mapStateToProps = state => ({
-    todos: state.todos.todosList,
-    newTodo: state.todos.todo
+    todos: state.todos.todosList
 });
 
-export default connect(mapStateToProps, { fetchTodos, addTodo })(Todos);
+export default connect(mapStateToProps, { fetchTodos, addTodo, removeTodo })(Todos);
