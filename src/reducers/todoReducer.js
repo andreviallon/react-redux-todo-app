@@ -1,4 +1,4 @@
-import { FETCH_TODOS, ADD_TODO, REMOVE_TODO } from '../actions/types';
+import { FETCH_TODOS, ADD_TODO, REMOVE_TODO, CLEAR_ALL_TODOS } from '../actions/types';
 
 const initialState = {
     todosList: []
@@ -17,6 +17,11 @@ export default function (state = initialState, action) {
                 todosList: action.payload
             }
         case REMOVE_TODO:
+            return {
+                ...state,
+                todosList: action.payload
+            }
+        case CLEAR_ALL_TODOS:
             return {
                 ...state,
                 todosList: action.payload

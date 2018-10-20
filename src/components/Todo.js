@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchTodos, addTodo, removeTodo } from '../actions/todoActions';
+import { fetchTodos, addTodo, removeTodo, clearAllTodos } from '../actions/todoActions';
 
 import './Todo.css';
 
@@ -15,6 +15,7 @@ class Todos extends Component {
 
         this.onChange = this.onChange.bind(this);
         this.onAddTodo = this.onAddTodo.bind(this);
+        this.onClearAllTodos = this.onClearAllTodos.bind(this);
     }
 
     componentWillMount() {
@@ -32,6 +33,7 @@ class Todos extends Component {
     }
 
     onAddTodo(e) {
+        console.log(this);
         e.preventDefault();
 
         const newTodo = this.state.newTodo;
@@ -50,6 +52,12 @@ class Todos extends Component {
         newTodosList.splice(i, 1);
 
         this.props.removeTodo(newTodosList);
+        console.log(this);
+    }
+
+    onClearAllTodos() {
+        const newTodosList = [];
+        this.props.clearAllTodos(newTodosList);
     }
 
     render() {
@@ -65,10 +73,10 @@ class Todos extends Component {
                 </div>
                 <ul>{this.props.todos.map((todo, i) =>
                     <div key={i} className="flex-container">
-                        <li>{todo}</li> <div className="fa fa-times" onClick={() => this.onRemoveTodo(i)}></div>
+                        <li>{todo}</li> <div className="fa fa-times" onClick={() => this.test}></div>
                     </div>
                 )}</ul>
-                <button className="clear-all">Clear all</button>
+                <button className="clear-all" onClick={this.onClearAllTodos}>Clear all</button>
             </div>
         )
     }
@@ -83,4 +91,9 @@ const mapStateToProps = state => ({
     todos: state.todos.todosList
 });
 
-export default connect(mapStateToProps, { fetchTodos, addTodo, removeTodo })(Todos);
+export default connect(mapStateToProps, {
+    fetchTodos,
+    addTodo,
+    removeTodo,
+    clearAllTodos
+})(Todos);

@@ -1,4 +1,4 @@
-import { FETCH_TODOS, ADD_TODO, REMOVE_TODO } from './types';
+import { FETCH_TODOS, ADD_TODO, REMOVE_TODO, CLEAR_ALL_TODOS } from './types';
 
 export const fetchTodos = () => dispatch => {
     const action = {
@@ -19,6 +19,14 @@ export const addTodo = newTodosList => dispatch => {
 export const removeTodo = newTodosList => dispatch => {
     const action = {
         type: REMOVE_TODO,
+        payload: newTodosList
+    }
+    dispatch(action);
+}
+
+export const clearAllTodos = newTodosList => dispatch => {
+    const action = {
+        type: CLEAR_ALL_TODOS,
         payload: newTodosList
     }
     dispatch(action);
