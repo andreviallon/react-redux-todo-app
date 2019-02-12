@@ -15,7 +15,9 @@ class Todos extends Component {
 
         this.onChange = this.onChange.bind(this);
         this.onAddTodo = this.onAddTodo.bind(this);
+        this.onRemoveTodo = this.onRemoveTodo.bind(this);
         this.onClearAllTodos = this.onClearAllTodos.bind(this);
+        this.onGoBackTodos = this.onGoBackTodos.bind(this);
     }
 
     componentWillMount() {
@@ -33,31 +35,39 @@ class Todos extends Component {
     }
 
     onAddTodo(e) {
-        console.log(this);
         e.preventDefault();
 
-        const newTodo = this.state.newTodo;
-        const trimedTodo = newTodo.trim();
+        const newTodo = this.state.newTodo.trim();
 
-        if (trimedTodo === '') return;
-
-        const newTodosList = [trimedTodo, ...this.props.todos];
+        if (newTodo === '') {
+            this.onResetState();
+            return;
+        }
+        const newTodosList = [newTodo, ...this.props.todos];
 
         this.props.addTodo(newTodosList);
+        this.onResetState();
+    }
+
+    onResetState() {
         this.setState({ newTodo: '' });
     }
 
     onRemoveTodo(i) {
         const newTodosList = [...this.props.todos];
+
         newTodosList.splice(i, 1);
 
         this.props.removeTodo(newTodosList);
-        console.log(this);
     }
 
     onClearAllTodos() {
         const newTodosList = [];
         this.props.clearAllTodos(newTodosList);
+    }
+
+    onGoBackTodos() {
+        console.log('go back');
     }
 
     render() {
@@ -73,10 +83,11 @@ class Todos extends Component {
                 </div>
                 <ul>{this.props.todos.map((todo, i) =>
                     <div key={i} className="flex-container">
-                        <li>{todo}</li> <div className="fa fa-times" onClick={() => this.test}></div>
+                        <li>{todo}</li> <div className="fa fa-times" onClick={(i) => this.onRemoveTodo(i)}></div>
                     </div>
                 )}</ul>
-                <button className="clear-all" onClick={this.onClearAllTodos}>Clear all</button>
+                <button className="clear-all" onClick={this.onClearAllTodos}>Clear All</button>
+                <button className="go-back" onClick={this.onGoBackTodos}>Go Back</button>
             </div>
         )
     }

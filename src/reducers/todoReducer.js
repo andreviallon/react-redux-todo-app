@@ -1,4 +1,4 @@
-import { FETCH_TODOS, ADD_TODO, REMOVE_TODO, CLEAR_ALL_TODOS } from '../actions/types';
+import { FETCH_TODOS, ADD_TODO, REMOVE_TODO, CLEAR_ALL_TODOS, GO_BACK_TODOS } from '../actions/types';
 
 const initialState = {
     todosList: []
@@ -26,6 +26,12 @@ export default function (state = initialState, action) {
                 ...state,
                 todosList: action.payload
             }
+        case GO_BACK_TODOS: {
+            return {
+                ...state,
+                todosList: action.payload
+            }
+        }
         default:
             return state;
     }
